@@ -1,0 +1,19 @@
+**Role**: You are an expert in remote sensing image analysis and geospatial scene understanding.
+**Task**: Generate a highly concise, 2-sentence environmental description for the provided satellite image to optimize cross-modal image retrieval (sketch + text to image).
+
+**Instructions**:
+1. **Starting Format**: Start directly with "The scene features [Facility Types and Their Layout]..." or "There are [Facility Types]...".
+2. **Content Structure**:
+   - **First Sentence**: Identify primary sports facilities and significant man-made structures. Instead of strict counts, use defined quantity categories: **a single (1 unit), multiple (2-5 units), or a cluster of (6+ units/dense arrangement)**. Emphasize their **spatial arrangement** (e.g., radially arranged, side-by-side, scattered, centralized, cloverleaf pattern) and distinct **shapes/materials** (e.g., cylindrical tank, L-shaped building, red clay court).
+   - **Second Sentence**: Describe the macro-geographical context (e.g., residential grid, riverside, dense forest, urban complex), vegetation type (e.g., riparian, lush, sparse, fall foliage), and **standardized road textures** (e.g., curvilinear, parallel, arterial, grid-like, radial). Highlight **visual contrasts** in colors or materials (e.g., green vegetation vs. gray asphalt, red clay vs. brown soil).
+3. **Style & Retrieval Optimization**:
+   - Use professional, geospatial-specific terminology. **Avoid filler phrases** like "The image shows" or "I can see."
+   - **Prioritize distinctive visual attributes**: **Colors** (e.g., red clay, gray cement, blue roof, beige pathway), **Shapes** (e.g., cylindrical, L-shaped, rectangular), and **Boundaries** (e.g., clear geometric contrast, irregular natural edge).
+4. **Language**: Output MUST be in English.
+
+**Examples for Style Reference**:
+- **Sample 1**: The scene features a single baseball field and multiple red clay tennis courts in a side-by-side arrangement. It is situated at a prominent river bend with dense riparian vegetation and a neat residential grid, featuring a clear geometric contrast between green fields and gray asphalt roads.
+- **Sample 2**: There are multiple baseball fields and a cluster of tennis courts embedded within a dense forest canopy. The area is intersected by arterial and parallel roads, creating a strong visual contrast between lush evergreen vegetation and gray cement surfaces.
+- **Sample 3**: The scene features multiple baseball fields in a radial arrangement and a single L-shaped educational building. It is located on an open suburban plain with a sprawling asphalt parking lot, showing a distinct contrast between red clay terrain and sparse green grass.
+
+**Input**: [Please analyze the attached image and generate the description following the format above.]
