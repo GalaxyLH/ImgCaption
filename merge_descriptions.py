@@ -4,8 +4,8 @@ Merge LLM-generated descriptions into existing pickle datasets.
 Result: [env desc] + "Specifically, the target is to " + [find ...] + [area/distance]
 
 Usage:
-    python merge_descriptions.py                           # default: output/captions.json
-    python merge_descriptions.py --captions output/captions_sat.json
+    python merge_descriptions.py sat
+    python merge_descriptions.py svi_uav
 """
 
 import argparse
@@ -13,6 +13,11 @@ import pickle
 import json
 from pathlib import Path
 from typing import Dict, Tuple
+
+SCENE_CONFIG = {
+    "sat":     {"dataset": "sRSVG", "splits": ["sRSVG_train", "sRSVG_val", "sRSVG_test"]},
+    "svi_uav": {"dataset": "sRSVG", "splits": ["sRSVG_train", "sRSVG_val", "sRSVG_test"]},
+}
 
 SKIP_PHRASES = [
     "i'm sorry", "i can't", "i'm unable",
@@ -96,14 +101,14 @@ def update_pickle(pkl_path: Path, responses: Dict[str, str],
 
 def main():
     parser = argparse.ArgumentParser(description="Merge LLM descriptions into pickle datasets")
-    parser.add_argument("--captions", default="output/captions.json",
-                        help="path to captions JSON (relative to script dir)")
+    parser.add_argument("scene", choices=SCENE_CONFIG.keys(), help="scene type")
     args = parser.parse_args()
 
+    cfg = SCENE_CONFIG[args.scene]
     base = Path(__file__).parent
-    captions_json = base / args.captions
-    old_dir = base / "text" / "old" / "sRSVG"
-    new_dir = base / "text" / "new" / "sRSVG"
+    captions_json = base / "output" / f"captions_{args.scene}.json"
+    old_dir = base / "text" / "old" / cfg["dataset"]
+    new_dir = base / "text" / "new" / cfg["dataset"]
 
     if not captions_json.exists():
         raise FileNotFoundError(captions_json)
@@ -113,10 +118,10 @@ def main():
     responses = load_llm_responses(captions_json)
 
     total_up = total_miss = 0
-    for name in ("sRSVG_train.pickle", "sRSVG_val.pickle", "sRSVG_test.pickle"):
-        pkl = old_dir / name
+    for split in cfg["splits"]:
+        pkl = old_dir / f"{split}.pickle"
         if not pkl.exists():
-            print(f"  Skipped: {name}")
+            print(f"  Skipped: {split}.pickle")
             continue
         u, m = update_pickle(pkl, responses, new_dir)
         total_up += u
