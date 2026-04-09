@@ -21,7 +21,8 @@ python generate_captions.py svi_uav
 python generate_captions.py sat --model gpt-4o --detail high --batch-size 20 --max-tokens 300
 
 # merge
-python merge_descriptions.py --captions output/captions_sat.json
+python merge_descriptions.py sat
+python merge_descriptions.py svi_uav
 ```
 
 ## Project structure
@@ -31,5 +32,5 @@ generate_captions.py        batch description generation
 merge_descriptions.py       merge into pickle annotations
 prompts/
   prompt_sat.txt            satellite prompt
-  prompt_svi_uav.txt        svi / uav prompt
+  prompt_svi_uav.txt        street-view / UAV prompt
 ```
